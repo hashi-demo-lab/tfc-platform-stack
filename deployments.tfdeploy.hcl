@@ -18,7 +18,7 @@ store "varset" "platform_team_config" {
 locals {
   # Common configuration
   organization        = "cloudbrokeraz"
-  github_organization = "CloudbrokerAz"
+  github_organization = "hashi-demo-lab"
   platform_project    = "Platform_Team"
   
   # Commit configuration
@@ -26,7 +26,7 @@ locals {
   commit_author_email = "platform-team@cloudbrokeraz.com"
   
   # Repository configuration
-  create_bu_repositories   = true  # Disabled: CloudbrokerAz is a user account, not an org
+  create_bu_repositories   = true
   bu_stack_repo_prefix     = "tfc"
   bu_stack_repo_suffix     = "bu-stack"
   enable_branch_protection = false  # Requires GitHub Pro for private repos

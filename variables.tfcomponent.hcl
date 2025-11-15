@@ -11,7 +11,7 @@ variable "tfc_organization_name" {
 variable "github_organization" {
   type        = string
   description = "GitHub organization name"
-  default     = "CloudbrokerAz"
+  default     = "hashi-demo-lab"
 }
 
 variable "platform_project_name" {
