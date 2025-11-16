@@ -75,6 +75,8 @@ variable "create_hcp_stacks" {
 variable "vcs_oauth_token_id" {
   type        = string
   description = "OAuth token ID for VCS connection (format: ot-xxxxx). Required if create_hcp_stacks = true."
+  ephemeral   = true  # Required for store values
+  sensitive   = true  # Hide in logs
   default     = ""
 }
 
