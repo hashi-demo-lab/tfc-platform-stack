@@ -20,6 +20,11 @@ variable "platform_project_name" {
   default     = "Platform_Team"
 }
 
+variable "platform_stack_project_id" {
+  type        = string
+  description = "HCP Terraform project ID where BU Stacks will be created (required due to Stacks RBAC limitation - publish_output only works within same project)"
+}
+
 variable "tfe_identity_token" {
   type        = string
   description = "OIDC identity token for TFE provider authentication"

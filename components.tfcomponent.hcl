@@ -4,7 +4,7 @@
 
 component "platform_onboarding" {
   source  = "app.terraform.io/cloudbrokeraz/platform-onboarding/tfe"
-  version = "1.1.6"
+  version = "1.2.0"
   
   inputs = {
     # TFC Organization
@@ -27,7 +27,8 @@ component "platform_onboarding" {
     vcs_oauth_token_id = var.vcs_oauth_token_id
     
     # Platform Configuration
-    platform_stack_project = var.platform_project_name
+    platform_stack_project    = var.platform_project_name
+    platform_stack_project_id = var.platform_stack_project_id
     
     # GitHub Settings
     github_team_privacy      = "closed"

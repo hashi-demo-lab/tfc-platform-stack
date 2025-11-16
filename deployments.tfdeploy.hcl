@@ -21,6 +21,11 @@ locals {
   github_organization = "hashi-demo-lab"
   platform_project    = "Platform_Team"
   
+  # Platform Team project ID (required for BU Stack creation)
+  # Due to Stacks RBAC limitation: publish_output only works within same project
+  # See: https://developer.hashicorp.com/terraform/language/block/stack/tfdeploy/publish_output
+  platform_project_id = "prj-Cpek7LywxDio3iT5"
+  
   # Commit configuration
   commit_author_name  = "Platform Team"
   commit_author_email = "platform-team@cloudbrokeraz.com"
@@ -276,7 +281,8 @@ deployment "platform-engineering" {
     vcs_oauth_token_id = local.vcs_oauth_token_id
     
     # Platform configuration
-    platform_project_name = local.platform_project
+    platform_project_name     = local.platform_project
+    platform_stack_project_id = local.platform_project_id
     
     # Commit author
     commit_author_name  = local.commit_author_name
@@ -316,7 +322,8 @@ deployment "security-ops" {
     vcs_oauth_token_id = local.vcs_oauth_token_id
     
     # Platform configuration
-    platform_project_name = local.platform_project
+    platform_project_name     = local.platform_project
+    platform_stack_project_id = local.platform_project_id
     
     # Commit author
     commit_author_name  = local.commit_author_name
@@ -356,7 +363,8 @@ deployment "cloud-infrastructure" {
     vcs_oauth_token_id = local.vcs_oauth_token_id
     
     # Platform configuration
-    platform_project_name = local.platform_project
+    platform_project_name     = local.platform_project
+    platform_stack_project_id = local.platform_project_id
     
     # Commit author
     commit_author_name  = local.commit_author_name
