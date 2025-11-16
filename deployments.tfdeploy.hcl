@@ -34,6 +34,11 @@ locals {
   # HCP Terraform Stack configuration
   create_hcp_stacks = true  # Enable Stack creation for BU repos
   
+  # VCS OAuth Token ID for Stack-GitHub connection
+  # Get from: HCP Terraform → Organization Settings → Version Control → Providers
+  # Format: ot-xxxxxxxxxxxxx
+  vcs_oauth_token_id = "ot-JKCe2joSPQz55gbq"  # Replace with your OAuth token ID
+  
   # YAML Configuration Content - Embedded as strings (file() not available in .tfdeploy.hcl)
   platform_engineering_yaml = <<-EOT
     business_unit: platform-engineering
@@ -268,7 +273,7 @@ deployment "platform-engineering" {
     
     # HCP Terraform Stack creation
     create_hcp_stacks  = local.create_hcp_stacks
-    vcs_oauth_token_id = store.varset.platform_team_config.vcs_oauth_token_id
+    vcs_oauth_token_id = local.vcs_oauth_token_id
     
     # Platform configuration
     platform_project_name = local.platform_project
@@ -308,7 +313,7 @@ deployment "security-ops" {
     
     # HCP Terraform Stack creation
     create_hcp_stacks  = local.create_hcp_stacks
-    vcs_oauth_token_id = store.varset.platform_team_config.vcs_oauth_token_id
+    vcs_oauth_token_id = local.vcs_oauth_token_id
     
     # Platform configuration
     platform_project_name = local.platform_project
@@ -348,7 +353,7 @@ deployment "cloud-infrastructure" {
     
     # HCP Terraform Stack creation
     create_hcp_stacks  = local.create_hcp_stacks
-    vcs_oauth_token_id = store.varset.platform_team_config.vcs_oauth_token_id
+    vcs_oauth_token_id = local.vcs_oauth_token_id
     
     # Platform configuration
     platform_project_name = local.platform_project
