@@ -4,7 +4,7 @@
 
 component "platform_onboarding" {
   source  = "app.terraform.io/cloudbrokeraz/platform-onboarding/tfe"
-  version = "1.0.1"  # Update after module is published to PMR
+  version = "1.0.2"
   
   inputs = {
     # TFC Organization
