@@ -31,6 +31,9 @@ locals {
   bu_stack_repo_suffix     = "bu-stack"
   enable_branch_protection = false  # Requires GitHub Pro for private repos
   
+  # HCP Terraform Stack configuration
+  create_hcp_stacks = true  # Enable Stack creation for BU repos
+  
   # YAML Configuration Content - Embedded as strings (file() not available in .tfdeploy.hcl)
   platform_engineering_yaml = <<-EOT
     business_unit: platform-engineering
@@ -263,6 +266,10 @@ deployment "platform-engineering" {
     bu_stack_repo_suffix     = local.bu_stack_repo_suffix
     enable_branch_protection = local.enable_branch_protection
     
+    # HCP Terraform Stack creation
+    create_hcp_stacks  = local.create_hcp_stacks
+    vcs_oauth_token_id = store.varset.platform_team_config.vcs_oauth_token_id
+    
     # Platform configuration
     platform_project_name = local.platform_project
     
@@ -299,6 +306,10 @@ deployment "security-ops" {
     bu_stack_repo_suffix     = local.bu_stack_repo_suffix
     enable_branch_protection = local.enable_branch_protection
     
+    # HCP Terraform Stack creation
+    create_hcp_stacks  = local.create_hcp_stacks
+    vcs_oauth_token_id = store.varset.platform_team_config.vcs_oauth_token_id
+    
     # Platform configuration
     platform_project_name = local.platform_project
     
@@ -334,6 +345,10 @@ deployment "cloud-infrastructure" {
     bu_stack_repo_prefix     = local.bu_stack_repo_prefix
     bu_stack_repo_suffix     = local.bu_stack_repo_suffix
     enable_branch_protection = local.enable_branch_protection
+    
+    # HCP Terraform Stack creation
+    create_hcp_stacks  = local.create_hcp_stacks
+    vcs_oauth_token_id = store.varset.platform_team_config.vcs_oauth_token_id
     
     # Platform configuration
     platform_project_name = local.platform_project

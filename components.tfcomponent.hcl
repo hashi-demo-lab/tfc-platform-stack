@@ -4,7 +4,7 @@
 
 component "platform_onboarding" {
   source  = "app.terraform.io/cloudbrokeraz/platform-onboarding/tfe"
-  version = "1.0.3"
+  version = "1.1.0"
   
   inputs = {
     # TFC Organization
@@ -22,9 +22,9 @@ component "platform_onboarding" {
     bu_stack_repo_prefix   = var.bu_stack_repo_prefix
     bu_stack_repo_suffix   = var.bu_stack_repo_suffix
     
-    # HCP Terraform Stacks (managed separately via Stack deployment)
-    create_hcp_stacks  = false
-    vcs_oauth_token_id = ""
+    # HCP Terraform Stacks Creation
+    create_hcp_stacks  = var.create_hcp_stacks
+    vcs_oauth_token_id = var.vcs_oauth_token_id
     
     # Platform Configuration
     platform_stack_project = var.platform_project_name

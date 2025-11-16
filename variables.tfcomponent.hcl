@@ -63,6 +63,22 @@ variable "enable_branch_protection" {
 }
 
 # ============================================================================
+# HCP Terraform Stack Configuration
+# ============================================================================
+
+variable "create_hcp_stacks" {
+  type        = bool
+  description = "Create HCP Terraform Stacks for each BU (connects to GitHub repos)"
+  default     = true
+}
+
+variable "vcs_oauth_token_id" {
+  type        = string
+  description = "OAuth token ID for VCS connection (format: ot-xxxxx). Required if create_hcp_stacks = true."
+  default     = ""
+}
+
+# ============================================================================
 # Commit Configuration
 # ============================================================================
 
