@@ -36,11 +36,50 @@ locals {
     business_unit: finance
 
     bu_projects:
-      - project_name: "payment-gateway"
-        project_description: "Payment processing infrastructure"
-      
-      - project_name: "financial-reporting"
-        project_description: "Financial reporting and analytics infrastructure"
+      - name: payment-gateway
+        description: Payment processing infrastructure
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+              description: Deployment environment
+            - key: team
+              value: finance-payments
+            - key: aws_region
+              value: us-east-1
+            - key: compliance_level
+              value: pci-dss
+              description: PCI-DSS compliance required
+              sensitive: false
+
+      - name: financial-reporting
+        description: Financial reporting and analytics infrastructure
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: finance-analytics
+            - key: data_retention_days
+              value: "2555"
+              description: 7 years retention for compliance
+            - key: encryption_enabled
+              value: "true"
+              hcl: true
+
+      - name: billing-systems
+        description: Customer billing and invoicing systems
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: finance-billing
+            - key: aws_region
+              value: us-west-2
+            - key: enable_multi_currency
+              value: "true"
+              hcl: true
   EOT
   
   engineering_yaml = <<-EOT
@@ -105,7 +144,7 @@ deployment "finance" {
     commit_author_name  = local.commit_author_name
     commit_author_email = local.commit_author_email
   }
-  destroy = true
+  destroy = false
 }
 
 # # ============================================================================
