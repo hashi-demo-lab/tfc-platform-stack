@@ -60,16 +60,16 @@ output "bu_stack_repo_urls" {
   value       = component.platform_onboarding.bu_stack_repo_urls
 }
 
-# output "deployment_summary" {
-#   type = object({
-#     business_units_count    = number
-#     bu_projects_count       = number
-#     consumer_projects_count = number
-#     bu_teams_count          = number
-#     bu_workspaces_count     = number
-#     github_repos_created    = number
-#     github_teams_created    = number
-#   })
-#   description = "Summary of resources created"
-#   value       = component.platform_onboarding.deployment_summary
-# }
+output "deployment_summary" {
+  type = object({
+    business_units_count    = number
+    bu_projects_count       = number
+    consumer_projects_count = number
+    bu_teams_count          = number
+    bu_workspaces_count     = number
+    github_repos_created    = number
+    github_teams_created    = number
+  })
+  description = "Summary of resources created"
+  value       = component.platform_onboarding.deployment_summary
+}

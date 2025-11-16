@@ -4,7 +4,7 @@
 
 component "platform_onboarding" {
   source  = "app.terraform.io/cloudbrokeraz/platform-onboarding/tfe"
-  version = "1.0.2"
+  version = "1.0.3"
   
   inputs = {
     # TFC Organization
