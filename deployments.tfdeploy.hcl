@@ -273,75 +273,75 @@ deployment "platform-engineering" {
   destroy = false
 }
 
-# # ============================================================================
-# # Deployment: Security Operations Team
-# # ============================================================================
+# ============================================================================
+# Deployment: Security Operations Team
+# ============================================================================
 
-# deployment "security-ops" {
-#   inputs = {
-#     # Organization
-#     tfc_organization_name = local.organization
+deployment "security-ops" {
+  inputs = {
+    # Organization
+    tfc_organization_name = local.organization
     
-#     # Filter to security-ops business unit
-#     business_unit = "security-ops"
+    # Filter to security-ops business unit
+    business_unit = "security-ops"
     
-#     # YAML Configuration - Reference local variable
-#     yaml_config_content = local.security_ops_yaml
+    # YAML Configuration - Reference local variable
+    yaml_config_content = local.security_ops_yaml
     
-#     # GitHub token from variable set
-#     github_token = store.varset.platform_team_config.github_token
-#     tfe_identity_token = store.varset.platform_team_config.token
+    # GitHub token from variable set
+    github_token = store.varset.platform_team_config.github_token
+    tfe_identity_token = store.varset.platform_team_config.token
     
-#     # GitHub repository creation
-#     create_bu_repositories   = local.create_bu_repositories
-#     github_organization      = local.github_organization
-#     bu_stack_repo_prefix     = local.bu_stack_repo_prefix
-#     bu_stack_repo_suffix     = local.bu_stack_repo_suffix
-#     enable_branch_protection = local.enable_branch_protection
+    # GitHub repository creation
+    create_bu_repositories   = local.create_bu_repositories
+    github_organization      = local.github_organization
+    bu_stack_repo_prefix     = local.bu_stack_repo_prefix
+    bu_stack_repo_suffix     = local.bu_stack_repo_suffix
+    enable_branch_protection = local.enable_branch_protection
     
-#     # Platform configuration
-#     platform_project_name = local.platform_project
+    # Platform configuration
+    platform_project_name = local.platform_project
     
-#     # Commit author
-#     commit_author_name  = local.commit_author_name
-#     commit_author_email = local.commit_author_email
-#   }
-#   destroy = true
-# }
+    # Commit author
+    commit_author_name  = local.commit_author_name
+    commit_author_email = local.commit_author_email
+  }
+  destroy = false
+}
 
-# # ============================================================================
-# # Deployment: Cloud Infrastructure Team
-# # ============================================================================
+# ============================================================================
+# Deployment: Cloud Infrastructure Team
+# ============================================================================
 
-# deployment "cloud-infrastructure" {
-#   inputs = {
-#     # Organization
-#     tfc_organization_name = local.organization
+deployment "cloud-infrastructure" {
+  inputs = {
+    # Organization
+    tfc_organization_name = local.organization
     
-#     # Filter to cloud-infrastructure business unit
-#     business_unit = "cloud-infrastructure"
+    # Filter to cloud-infrastructure business unit
+    business_unit = "cloud-infrastructure"
     
-#     # YAML Configuration - Reference local variable
-#     yaml_config_content = local.cloud_infrastructure_yaml
+    # YAML Configuration - Reference local variable
+    yaml_config_content = local.cloud_infrastructure_yaml
     
-#     # GitHub token from variable set
-#     github_token = store.varset.platform_team_config.github_token
-#     tfe_identity_token = store.varset.platform_team_config.token
+    # GitHub token from variable set
+    github_token = store.varset.platform_team_config.github_token
+    tfe_identity_token = store.varset.platform_team_config.token
     
-#     # GitHub repository creation
-#     create_bu_repositories   = local.create_bu_repositories
-#     github_organization      = local.github_organization
-#     bu_stack_repo_prefix     = local.bu_stack_repo_prefix
-#     bu_stack_repo_suffix     = local.bu_stack_repo_suffix
-#     enable_branch_protection = local.enable_branch_protection
+    # GitHub repository creation
+    create_bu_repositories   = local.create_bu_repositories
+    github_organization      = local.github_organization
+    bu_stack_repo_prefix     = local.bu_stack_repo_prefix
+    bu_stack_repo_suffix     = local.bu_stack_repo_suffix
+    enable_branch_protection = local.enable_branch_protection
     
-#     # Platform configuration
-#     platform_project_name = local.platform_project
+    # Platform configuration
+    platform_project_name = local.platform_project
     
-#     # Commit author
-#     commit_author_name  = local.commit_author_name
-#     commit_author_email = local.commit_author_email
-#   }
-#   destroy = true
-# }
+    # Commit author
+    commit_author_name  = local.commit_author_name
+    commit_author_email = local.commit_author_email
+  }
+  destroy = false
+}
 
