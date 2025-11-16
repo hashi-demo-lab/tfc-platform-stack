@@ -105,7 +105,7 @@ deployment "finance" {
     commit_author_name  = local.commit_author_name
     commit_author_email = local.commit_author_email
   }
-  destroy = false
+  destroy = true
 }
 
 # # ============================================================================
