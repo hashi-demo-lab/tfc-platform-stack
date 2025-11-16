@@ -32,99 +32,225 @@ locals {
   enable_branch_protection = false  # Requires GitHub Pro for private repos
   
   # YAML Configuration Content - Embedded as strings (file() not available in .tfdeploy.hcl)
-  finance_yaml = <<-EOT
-    business_unit: finance
+  platform_engineering_yaml = <<-EOT
+    business_unit: platform-engineering
 
     bu_projects:
-      - name: payment-gateway
-        description: Payment processing infrastructure
+      - project_name: kubernetes-platform
+        project_description: Kubernetes cluster management and operations
         var_sets:
           variables:
             - key: environment
               value: production
               description: Deployment environment
             - key: team
-              value: finance-payments
+              value: platform-k8s
             - key: aws_region
               value: us-east-1
-            - key: compliance_level
-              value: pci-dss
-              description: PCI-DSS compliance required
+            - key: cluster_version
+              value: "1.28"
+              description: Kubernetes version
               sensitive: false
 
-      - name: financial-reporting
-        description: Financial reporting and analytics infrastructure
+      - project_name: service-mesh
+        project_description: Service mesh infrastructure and observability
         var_sets:
           variables:
             - key: environment
               value: production
             - key: team
-              value: finance-analytics
-            - key: data_retention_days
-              value: "2555"
-              description: 7 years retention for compliance
-            - key: encryption_enabled
+              value: platform-mesh
+            - key: mesh_type
+              value: istio
+              description: Service mesh implementation
+            - key: enable_tracing
               value: "true"
               hcl: true
 
-      - name: billing-systems
-        description: Customer billing and invoicing systems
+      - project_name: ci-cd-platform
+        project_description: CI/CD pipeline infrastructure and tooling
         var_sets:
           variables:
             - key: environment
               value: production
             - key: team
-              value: finance-billing
+              value: platform-cicd
             - key: aws_region
               value: us-west-2
-            - key: enable_multi_currency
+            - key: enable_artifact_scanning
               value: "true"
               hcl: true
   EOT
   
-  engineering_yaml = <<-EOT
-    business_unit: engineering
+  security_ops_yaml = <<-EOT
+    business_unit: security-ops
 
     bu_projects:
-      - project_name: "platform-services"
-        project_description: "Core platform services and infrastructure"
-      
-      - project_name: "developer-tools"
-        project_description: "Developer productivity and tooling infrastructure"
-      
-      - project_name: "api-gateway"
-        project_description: "API gateway and service mesh infrastructure"
+      - project_name: siem-platform
+        project_description: Security Information and Event Management infrastructure
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: secops-siem
+            - key: aws_region
+              value: us-east-1
+            - key: retention_days
+              value: "365"
+              description: Log retention period
+            - key: enable_threat_detection
+              value: "true"
+              hcl: true
+
+      - project_name: vulnerability-scanning
+        project_description: Vulnerability scanning and compliance monitoring
+        var_sets:
+          variables:
+            - key: environment
+              value: shared
+            - key: team
+              value: secops-vuln
+            - key: scan_frequency
+              value: daily
+            - key: enable_auto_remediation
+              value: "false"
+              hcl: true
+            - key: severity_threshold
+              value: '["critical", "high"]'
+              hcl: true
+              description: Alert on these severity levels
+
+      - project_name: identity-access-management
+        project_description: IAM and identity governance infrastructure
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: secops-iam
+            - key: aws_region
+              value: us-east-1
+            - key: mfa_required
+              value: "true"
+              hcl: true
+            - key: session_duration_hours
+              value: "8"
+              description: Maximum session duration
+
+      - project_name: secrets-management
+        project_description: Secrets and certificate management infrastructure
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: secops-secrets
+            - key: aws_region
+              value: us-west-2
+            - key: rotation_enabled
+              value: "true"
+              hcl: true
+            - key: rotation_days
+              value: "90"
+              description: Secret rotation period
   EOT
   
-  sales_yaml = <<-EOT
-    business_unit: sales
+  cloud_infrastructure_yaml = <<-EOT
+    business_unit: cloud-infrastructure
 
     bu_projects:
-      - project_name: "crm-platform"
-        project_description: "Customer relationship management platform infrastructure"
-      
-      - project_name: "analytics-pipeline"
-        project_description: "Sales analytics and reporting pipeline"
-      
-      - project_name: "sales-portal"
-        project_description: "Sales team portal and tools infrastructure"
+      - project_name: network-backbone
+        project_description: Core network infrastructure and connectivity
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: cloudinfra-network
+            - key: aws_region
+              value: us-east-1
+            - key: vpc_cidr
+              value: 10.0.0.0/16
+              description: Primary VPC CIDR block
+            - key: enable_transit_gateway
+              value: "true"
+              hcl: true
+            - key: availability_zones
+              value: "3"
+
+      - project_name: compute-resources
+        project_description: VM and container compute infrastructure
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: cloudinfra-compute
+            - key: aws_region
+              value: us-west-2
+            - key: enable_autoscaling
+              value: "true"
+              hcl: true
+            - key: enable_spot_instances
+              value: "true"
+              hcl: true
+            - key: cost_optimization_level
+              value: balanced
+              description: Cost optimization strategy
+
+      - project_name: storage-services
+        project_description: Object storage and backup infrastructure
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: cloudinfra-storage
+            - key: aws_region
+              value: us-east-1
+            - key: lifecycle_enabled
+              value: "true"
+              hcl: true
+            - key: backup_retention_days
+              value: "90"
+              description: Backup retention period
+
+      - project_name: disaster-recovery
+        project_description: DR and business continuity infrastructure
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: cloudinfra-dr
+            - key: primary_region
+              value: us-east-1
+            - key: dr_region
+              value: us-west-2
+            - key: rpo_minutes
+              value: "60"
+              description: Recovery Point Objective
+            - key: rto_minutes
+              value: "240"
+              description: Recovery Time Objective
   EOT
 }
 
 # ============================================================================
-# Deployment: Finance BU
+# Deployment: Platform Engineering Team
 # ============================================================================
 
-deployment "finance" {
+deployment "platform-engineering" {
   inputs = {
     # Organization
     tfc_organization_name = local.organization
     
-    # Filter to finance business unit
-    business_unit = "finance"
+    # Filter to platform-engineering business unit
+    business_unit = "platform-engineering"
     
     # YAML Configuration - Reference local variable
-    yaml_config_content = local.finance_yaml
+    yaml_config_content = local.platform_engineering_yaml
     
     # GitHub token from variable set
     github_token = store.varset.platform_team_config.github_token
@@ -148,19 +274,19 @@ deployment "finance" {
 }
 
 # # ============================================================================
-# # Deployment: Engineering BU
+# # Deployment: Security Operations Team
 # # ============================================================================
 
-# deployment "engineering" {
+# deployment "security-ops" {
 #   inputs = {
 #     # Organization
 #     tfc_organization_name = local.organization
     
-#     # Filter to engineering business unit
-#     business_unit = "engineering"
+#     # Filter to security-ops business unit
+#     business_unit = "security-ops"
     
 #     # YAML Configuration - Reference local variable
-#     yaml_config_content = local.engineering_yaml
+#     yaml_config_content = local.security_ops_yaml
     
 #     # GitHub token from variable set
 #     github_token = store.varset.platform_team_config.github_token
@@ -184,19 +310,19 @@ deployment "finance" {
 # }
 
 # # ============================================================================
-# # Deployment: Sales BU
+# # Deployment: Cloud Infrastructure Team
 # # ============================================================================
 
-# deployment "sales" {
+# deployment "cloud-infrastructure" {
 #   inputs = {
 #     # Organization
 #     tfc_organization_name = local.organization
     
-#     # Filter to sales business unit
-#     business_unit = "sales"
+#     # Filter to cloud-infrastructure business unit
+#     business_unit = "cloud-infrastructure"
     
 #     # YAML Configuration - Reference local variable
-#     yaml_config_content = local.sales_yaml
+#     yaml_config_content = local.cloud_infrastructure_yaml
     
 #     # GitHub token from variable set
 #     github_token = store.varset.platform_team_config.github_token
