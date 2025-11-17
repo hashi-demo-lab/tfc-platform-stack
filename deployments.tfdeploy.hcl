@@ -373,3 +373,45 @@ deployment "cloud-infrastructure" {
   destroy = false
 }
 
+# ============================================================================
+# Published Outputs (for BU Stack Consumption)
+# ============================================================================
+# These outputs are published from each deployment so BU Stacks in the same
+# project can access them via upstream_input blocks.
+# See: https://developer.hashicorp.com/terraform/language/block/stack/tfdeploy/publish_output
+
+publish_output "bu_infrastructure_platform_engineering" {
+  value = deployment.platform-engineering.bu_infrastructure
+}
+
+publish_output "bu_admin_tokens_platform_engineering" {
+  value = deployment.platform-engineering.bu_admin_tokens
+}
+
+publish_output "bu_project_ids_platform_engineering" {
+  value = deployment.platform-engineering.bu_project_ids_map
+}
+
+publish_output "bu_infrastructure_security_ops" {
+  value = deployment.security-ops.bu_infrastructure
+}
+
+publish_output "bu_admin_tokens_security_ops" {
+  value = deployment.security-ops.bu_admin_tokens
+}
+
+publish_output "bu_project_ids_security_ops" {
+  value = deployment.security-ops.bu_project_ids_map
+}
+
+publish_output "bu_infrastructure_cloud_infrastructure" {
+  value = deployment.cloud-infrastructure.bu_infrastructure
+}
+
+publish_output "bu_admin_tokens_cloud_infrastructure" {
+  value = deployment.cloud-infrastructure.bu_admin_tokens
+}
+
+publish_output "bu_project_ids_cloud_infrastructure" {
+  value = deployment.cloud-infrastructure.bu_project_ids_map
+}
