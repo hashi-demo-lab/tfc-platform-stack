@@ -248,6 +248,32 @@ locals {
               value: "240"
               description: Recovery Time Objective
   EOT
+  
+  infrastructure_operations_yaml = <<-EOT
+    business_unit: infrastructure-operations
+
+    bu_projects:
+      - project_name: vsphere-compute
+        project_description: On-premises vSphere infrastructure and virtual machine management
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: infraops-vsphere
+            - key: vcenter_datacenter
+              value: dc-primary
+              description: Primary vCenter datacenter
+            - key: enable_ha_clustering
+              value: "true"
+              hcl: true
+            - key: vm_resource_pool
+              value: production
+            - key: cpu_reservation_percent
+              value: "50"
+              description: CPU reservation percentage
+
+  EOT
 }
 
 # ============================================================================
@@ -374,6 +400,47 @@ deployment "cloud-infrastructure" {
 }
 
 # ============================================================================
+# Deployment: Infrastructure Operations Team (On-Premises)
+# ============================================================================
+
+deployment "infrastructure-operations" {
+  inputs = {
+    # Organization
+    tfc_organization_name = local.organization
+    
+    # Filter to infrastructure-operations business unit
+    business_unit = "infrastructure-operations"
+    
+    # YAML Configuration - Reference local variable
+    yaml_config_content = local.infrastructure_operations_yaml
+    
+    # GitHub token from variable set
+    github_token = store.varset.platform_team_config.github_token
+    tfe_identity_token = store.varset.platform_team_config.token
+    
+    # GitHub repository creation
+    create_bu_repositories   = local.create_bu_repositories
+    github_organization      = local.github_organization
+    bu_stack_repo_prefix     = local.bu_stack_repo_prefix
+    bu_stack_repo_suffix     = local.bu_stack_repo_suffix
+    enable_branch_protection = local.enable_branch_protection
+    
+    # HCP Terraform Stack creation
+    create_hcp_stacks  = local.create_hcp_stacks
+    vcs_oauth_token_id = local.vcs_oauth_token_id
+    
+    # Platform configuration
+    platform_project_name     = local.platform_project
+    platform_stack_project_id = local.platform_project_id
+    
+    # Commit author
+    commit_author_name  = local.commit_author_name
+    commit_author_email = local.commit_author_email
+  }
+  destroy = false
+}
+
+# ============================================================================
 # Published Outputs (for BU Stack Consumption)
 # ============================================================================
 # These outputs are published from each deployment so BU Stacks in the same
@@ -414,4 +481,16 @@ publish_output "bu_admin_tokens_cloud_infrastructure" {
 
 publish_output "bu_project_ids_cloud_infrastructure" {
   value = deployment.cloud-infrastructure.bu_project_ids_map
+}
+
+publish_output "bu_infrastructure_infrastructure_operations" {
+  value = deployment.infrastructure-operations.bu_infrastructure
+}
+
+publish_output "bu_admin_tokens_infrastructure_operations" {
+  value = deployment.infrastructure-operations.bu_admin_tokens
+}
+
+publish_output "bu_project_ids_infrastructure_operations" {
+  value = deployment.infrastructure-operations.bu_project_ids_map
 }
