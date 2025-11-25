@@ -341,42 +341,42 @@ deployment "platform-engineering" {
 # Deployment: Security Operations Team
 # ============================================================================
 
-deployment "security-ops" {
-  inputs = {
-    # Organization
-    tfc_organization_name = local.organization
+# deployment "security-ops" {
+#   inputs = {
+#     # Organization
+#     tfc_organization_name = local.organization
     
-    # Filter to security-ops business unit
-    business_unit = "security-ops"
+#     # Filter to security-ops business unit
+#     business_unit = "security-ops"
     
-    # YAML Configuration - Reference local variable
-    yaml_config_content = local.security_ops_yaml
+#     # YAML Configuration - Reference local variable
+#     yaml_config_content = local.security_ops_yaml
     
-    # GitHub token from variable set
-    github_token = store.varset.platform_team_config.github_token
-    tfe_identity_token = store.varset.platform_team_config.token
+#     # GitHub token from variable set
+#     github_token = store.varset.platform_team_config.github_token
+#     tfe_identity_token = store.varset.platform_team_config.token
     
-    # GitHub repository creation
-    create_bu_repositories   = local.create_bu_repositories
-    github_organization      = local.github_organization
-    bu_stack_repo_prefix     = local.bu_stack_repo_prefix
-    bu_stack_repo_suffix     = local.bu_stack_repo_suffix
-    enable_branch_protection = local.enable_branch_protection
+#     # GitHub repository creation
+#     create_bu_repositories   = local.create_bu_repositories
+#     github_organization      = local.github_organization
+#     bu_stack_repo_prefix     = local.bu_stack_repo_prefix
+#     bu_stack_repo_suffix     = local.bu_stack_repo_suffix
+#     enable_branch_protection = local.enable_branch_protection
     
-    # HCP Terraform Stack creation
-    create_hcp_stacks  = local.create_hcp_stacks
-    vcs_oauth_token_id = local.vcs_oauth_token_id
+#     # HCP Terraform Stack creation
+#     create_hcp_stacks  = local.create_hcp_stacks
+#     vcs_oauth_token_id = local.vcs_oauth_token_id
     
-    # Platform configuration
-    platform_project_name     = local.platform_project
-    platform_stack_project_id = local.platform_project_id
+#     # Platform configuration
+#     platform_project_name     = local.platform_project
+#     platform_stack_project_id = local.platform_project_id
     
-    # Commit author
-    commit_author_name  = local.commit_author_name
-    commit_author_email = local.commit_author_email
-  }
-  destroy = false
-}
+#     # Commit author
+#     commit_author_name  = local.commit_author_name
+#     commit_author_email = local.commit_author_email
+#   }
+#   destroy = false
+# }
 
 # ============================================================================
 # Deployment: Cloud Infrastructure Team
