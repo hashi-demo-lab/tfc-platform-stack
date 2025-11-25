@@ -253,26 +253,46 @@ locals {
     business_unit: infrastructure-operations
 
     bu_projects:
-      - project_name: vsphere-compute
-        project_description: On-premises vSphere infrastructure and virtual machine management
+      - project_name: enterprise-applications
+        project_description: Enterprise line-of-business applications running on on-premises vSphere
         var_sets:
           variables:
             - key: environment
               value: production
             - key: team
-              value: infraops-vsphere
-            - key: vcenter_datacenter
-              value: dc-primary
-              description: Primary vCenter datacenter
-            - key: enable_ha_clustering
+              value: it-enterprise-apps
+            - key: vm_tier
+              value: application
+              description: VM tier classification
+            - key: enable_backup
               value: "true"
               hcl: true
-            - key: vm_resource_pool
-              value: production
-            - key: cpu_reservation_percent
-              value: "50"
-              description: CPU reservation percentage
+            - key: backup_retention_days
+              value: "30"
+              description: Application backup retention
+            - key: resource_pool
+              value: enterprise-apps
+              description: vSphere resource pool
 
+      - project_name: database-services
+        project_description: Database server infrastructure and high-availability database clusters
+        var_sets:
+          variables:
+            - key: environment
+              value: production
+            - key: team
+              value: it-databases
+            - key: db_cluster_enabled
+              value: "true"
+              hcl: true
+            - key: db_replication_enabled
+              value: "true"
+              hcl: true
+            - key: resource_pool
+              value: database-tier
+            - key: cpu_reservation_percent
+              value: "75"
+              description: CPU reservation percentage for database tier
   EOT
 }
 
